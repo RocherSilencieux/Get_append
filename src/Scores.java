@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Scores {
 
-    public static void insertionSort(List<String[]> players) {
+    public static void ascendingSort(List<String[]> players) {
         for (int i = 1; i < players.size(); i++) {
             String[] current = players.get(i);
             int j = i - 1;
@@ -15,6 +15,21 @@ public class Scores {
             players.set(j + 1, current);
         }
     }
+
+    public static void descendingSort(List<String[]> players) {
+        for (int i = 1; i < players.size(); i++) {
+            String[] current = players.get(i);
+            int j = i - 1;
+
+            while (j >= 0 && Integer.parseInt(players.get(j)[1]) < Integer.parseInt(current[1])) {
+                players.set(j + 1, players.get(j));
+                j--;
+            }
+            players.set(j + 1, current);
+        }
+    }
+
+
 
     public static void displayTop10(List<String[]> players) {
         System.out.println("\nTop 10 Players:");
@@ -37,7 +52,8 @@ public class Scores {
         players.add(new String[]{"Jack", "170"});
         players.add(new String[]{"Kevin", "80"});
 
-        insertionSort(players);
+        //ascendingSort(players);
+        descendingSort(players);
 
         displayTop10(players);
     }
