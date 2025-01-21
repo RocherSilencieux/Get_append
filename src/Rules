@@ -8,3 +8,5 @@ The last player who can still move wins.
 3. A player cannot occupy a destroyed square or a square already occupied.
 
 4. A player who wins 5 points for each game won, and a player who loses 2 points for each game lost.
+
+Select "5" if you want to go back to the Menu.

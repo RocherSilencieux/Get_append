@@ -49,6 +49,9 @@ public class menu {
                 case 4:
                     System.out.println("❌ Quitter");
                     break;
+                case 5 :
+                    tape = true;
+                    break;
                 default: // if no specific cases are found  //
                     tape = false;
                     System.out.println("❌ Invalid choice, try again please.");
