@@ -15,8 +15,8 @@ class PlayerMovement {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
-        int[][] player = new int[10][11];  // Grid representation (10 rows and 11 columns)
-        move(player, 0, 2); // Example of the player's initial position at coordinates (2, 2)
+        short[][] player = new short[10][11];  // Grid representation (10 rows and 11 columns)
+        move(player, (short) 0, (short) 2); // Example of the player's initial position at coordinates (2, 2)
     }
 
     /**
@@ -28,14 +28,14 @@ class PlayerMovement {
      * @param x The current horizontal position of the player.
      * @return The new coordinates of the player after the move.
      */
-    public static int[] up(int[][] player, int y, int x) {
+    public static short[] up(short[][] player, short y, short x) {
         // Checks if the player is already at the top row
         if (y == 0) {
             System.out.println("You cannot move outside the grid ❌");
         } else {
             y -= 1;  // Move the player upwards
         }
-        return new int[] {y, x};  // Return the new coordinates
+        return new short[] {y, x};  // Return the new coordinates
     }
 
     /**
@@ -47,14 +47,14 @@ class PlayerMovement {
      * @param x The current horizontal position of the player.
      * @return The new coordinates of the player after the move.
      */
-    public static int[] down(int[][] player, int y, int x) {
+    public static short[] down(short[][] player, short y, short x) {
         // Checks if the player is already at the last row
         if (y == 9) {
             System.out.println("You cannot move outside the grid ❌");
         } else {
             y += 1;  // Move the player downwards
         }
-        return new int[] {y, x};  // Return the new coordinates
+        return new short[] {y, x};  // Return the new coordinates
     }
 
     /**
@@ -66,14 +66,14 @@ class PlayerMovement {
      * @param x The current horizontal position of the player.
      * @return The new coordinates of the player after the move.
      */
-    public static int[] left(int[][] player, int y, int x) {
+    public static short[] left(short[][] player, short y, short x) {
         // Checks if the player is already at the first column
         if (x == 0) {
             System.out.println("You cannot move outside the grid ❌");
         } else {
             x -= 1;  // Move the player to the left
         }
-        return new int[] {y, x};  // Return the new coordinates
+        return new short[] {y, x};  // Return the new coordinates
     }
 
     /**
@@ -85,14 +85,14 @@ class PlayerMovement {
      * @param x The current horizontal position of the player.
      * @return The new coordinates of the player after the move.
      */
-    public static int[] right(int[][] player, int y, int x) {
+    public static short[] right(short[][] player, short y, short x) {
         // Checks if the player is already at the last column
         if (x == 10) {
             System.out.println("You cannot move outside the grid ❌");
         } else {
             x += 1;  // Move the player to the right
         }
-        return new int[] {y, x};  // Return the new coordinates
+        return new short[] {y, x};  // Return the new coordinates
     }
 
     /**
@@ -104,39 +104,45 @@ class PlayerMovement {
      * @param y The current vertical position of the player.
      * @param x The current horizontal position of the player.
      */
-    public static void move(int[][] player, int y, int x) {
+    public static void move(short[][] player, short y, short x) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please move using the arrow keys or the Z, Q, S, D keys:");
 
         // Read the direction entered by the user
         String direction = scanner.nextLine();
 
+        // Check if the direction is not empty
+        if (direction.isEmpty()) {
+            System.out.println("No input provided, please enter a valid direction.");
+            move(player, y, x);  // Recursive call to ask for a valid direction again
+        }
+
         // Handle the movement based on the key pressed
         switch (direction.charAt(0)) {
             case 'z':
             case 'Z':
-                int[] newPosZ = up(player, y, x);
+                short[] newPosZ = up(player, y, x);
                 y = newPosZ[0];
                 x = newPosZ[1];
-                move(player, y, x);  // Recursive call to ask for a valid direction again
+//                move(player, y, x);  // Recursive call to ask for a valid direction again
             case 's':
             case 'S':
-                int[] newPosS = down(player, y, x);
+                short[] newPosS = down(player, y, x);
                 y = newPosS[0];
                 x = newPosS[1];
-                move(player, y, x);  // Recursive call to ask for a valid direction again
+//                move(player, y, x);  // Recursive call to ask for a valid direction again
             case 'q':
             case 'Q':
-                int[] newPosQ = left(player, y, x);
+                short[] newPosQ = left(player, y, x);
                 y = newPosQ[0];
                 x = newPosQ[1];
-                move(player, y, x);  // Recursive call to ask for a valid direction again
+//                move(player, y, x);  // Recursive call to ask for a valid direction again
             case 'd':
             case 'D':
-                int[] newPosD = right(player, y, x);
+                short[] newPosD = right(player, y, x);
                 y = newPosD[0];
                 x = newPosD[1];
-                move(player, y, x);  // Recursive call to ask for a valid direction again
+//                move(player, y, x);  // Recursive call to ask for a valid direction again
             default:
                 System.out.println("The selected key is not valid for movement.");
                 move(player, y, x);  // Recursive call to ask for a valid direction again
