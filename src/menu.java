@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class menu {
@@ -27,8 +29,18 @@ public class menu {
                     tape = false;
                     break;
                 case 2:
-                    System.out.println("Rules 📜");
+                    System.out.println("Rules 📜"+"\n");
                     tape = false;
+                    File file = new File("src/Rules");
+                    try {
+                        Scanner fileScanner = new Scanner(file);
+                        while (fileScanner.hasNextLine()) {
+                            System.out.println(fileScanner.nextLine());
+                        }
+                        fileScanner.close();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Fichier Rules introuvable !");
+                    }
                     break;
                 case 3:
                     System.out.println("Option ⚙️");
