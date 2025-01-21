@@ -12,8 +12,8 @@ public class Game
                 grid[4][5] = "J";
                 break;
             case 2:
-                grid[4][5] = "J1";
-                grid[4][6] = "J2";
+                grid[5][6] = "🟥";
+                grid[5][4] = "🟨";
                 break;
         }
 
