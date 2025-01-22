@@ -79,29 +79,66 @@ public class Game {
         // Close the scanner to release resources
         scanner.close();
     }
+
     /**
      * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
      * <p>
-     * This method examines the cells immediately surrounding the player's current position
-     * (up, down, left, and right) in the grid. If all surrounding cells contain either obstacles ("❌")
-     * or enemies ("🧞"), the player's alive status is set to false.
+     * This method determines if the player is surrounded on all sides (up, down, left, right)
+     * by obstacles ("❌") or enemies ("🧞"). If the player is surrounded, their alive status is set to false.
+     * The edges of the grid are handled safely to avoid out-of-bounds exceptions.
      * </p>
      *
      * @param grid   The array representing the game grid (visual representation).
+     *               Each cell in the grid may contain "❌" (obstacle), "🧞" (enemy), or other values.
      * @param player The array tracking the player's position within the grid.
-     * @param y      The current vertical position of the player.
-     * @param x      The current horizontal position of the player.
+     * @param y      The current vertical position (row) of the player in the grid.
+     * @param x      The current horizontal position (column) of the player in the grid.
      */
     public static void death(String[][] grid, short[][] player, short y, short x) {
-        // Check if all surrounding cells contain obstacles or enemies
-        if (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞") &&
-                grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞") &&
-                grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞") &&
-                grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞")) {
-            Player.Alive = false; // Mark the player as no longer alive
+        // Check the top cell, if it exists, to determine if it is blocked
+        boolean top = (y > 0) && (grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞"));
+
+        // Check the bottom cell, if it exists, to determine if it is blocked
+        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞"));
+
+        // Check the left cell, if it exists, to determine if it is blocked
+        boolean left = (x > 0) && (grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞"));
+
+        // Check the right cell, if it exists, to determine if it is blocked
+        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞"));
+
+        // Special handling for the top and bottom rows of the grid
+        switch (y) {
+            case 9: // If the player is on the bottom row
+                if (top && left && right) {
+                    Player.Alive = false; // The player is surrounded and dies
+                    break;
+                }
+            case 0: // If the player is on the top row
+                if (bottom && left && right) {
+                    Player.Alive = false; // The player is surrounded and dies
+                    break;
+                }
+        }
+
+        // Special handling for the leftmost and rightmost columns of the grid
+        switch (x) {
+            case 0: // If the player is in the leftmost column
+                if (top && bottom && right) {
+                    Player.Alive = false; // The player is surrounded and dies
+                    break;
+                }
+            case 10: // If the player is in the rightmost column
+                if (top && bottom && left) {
+                    Player.Alive = false; // The player is surrounded and dies
+                    break;
+                }
+        }
+
+        // If all surrounding cells are blocked, the player is considered dead
+        if (top && bottom && left && right) {
+            Player.Alive = false; // The player is surrounded and dies
         }
     }
-
-
-
 }
+
