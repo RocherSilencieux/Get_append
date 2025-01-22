@@ -1,0 +1,10 @@
+During his turn a player can move his pawn one square (vertically or horizontally), then he destroys a square on the board.
+The last player who can still move wins.
+
+1. A player blocked during a turn is declared the loser.
+
+2. A player cannot destroy an occupied square.
+
+3. A player cannot occupy a destroyed square or a square already occupied.
+
+4. A player who wins 5 points for each game won, and a player who loses 2 points for each game lost.
