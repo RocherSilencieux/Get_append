@@ -1,8 +1,5 @@
 public class Grid {
-    public static void main(String[] args)
-    {
 
-    }
     public static String[][] initializeGrid()
     {
         String[][] matrix = new String[10][11];
