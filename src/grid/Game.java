@@ -129,50 +129,50 @@ public class Game {
      * @param y      The current vertical position (row) of the player in the grid.
      * @param x      The current horizontal position (column) of the player in the grid.
      */
-    public static void death(String[][] grid, short[][] player, short y, short x) {
-        // Check the top cell, if it exists, to determine if it is blocked
-        boolean top = (y > 0) && (grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞"));
-
-        // Check the bottom cell, if it exists, to determine if it is blocked
-        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞"));
-
-        // Check the left cell, if it exists, to determine if it is blocked
-        boolean left = (x > 0) && (grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞"));
-
-        // Check the right cell, if it exists, to determine if it is blocked
-        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞"));
-
-        // Special handling for the top and bottom rows of the grid
-        switch (y) {
-            case 9: // If the player is on the bottom row
-                if (top && left && right) {
-                    Player.Alive = false; // The player is surrounded and dies
-                    break;
-                }
-            case 0: // If the player is on the top row
-                if (bottom && left && right) {
-                    Player.Alive = false; // The player is surrounded and dies
-                    break;
-                }
-        }
-
-        // Special handling for the leftmost and rightmost columns of the grid
-        switch (x) {
-            case 0: // If the player is in the leftmost column
-                if (top && bottom && right) {
-                    Player.Alive = false; // The player is surrounded and dies
-                    break;
-                }
-            case 10: // If the player is in the rightmost column
-                if (top && bottom && left) {
-                    Player.Alive = false; // The player is surrounded and dies
-                    break;
-                }
-        }
-        // If all surrounding cells are blocked, the player is considered dead
-        if (top && bottom && left && right) {
-            Player.Alive = false; // The player is surrounded and dies
-        }
-    }
+//    public static void death(String[][] grid, short[][] player, short y, short x) {
+//        // Check the top cell, if it exists, to determine if it is blocked
+//        boolean top = (y > 0) && (grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞"));
+//
+//        // Check the bottom cell, if it exists, to determine if it is blocked
+//        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞"));
+//
+//        // Check the left cell, if it exists, to determine if it is blocked
+//        boolean left = (x > 0) && (grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞"));
+//
+//        // Check the right cell, if it exists, to determine if it is blocked
+//        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞"));
+//
+//        // Special handling for the top and bottom rows of the grid
+//        switch (y) {
+//            case 9: // If the player is on the bottom row
+//                if (top && left && right) {
+//                    Player.Alive = false; // The player is surrounded and dies
+//                    break;
+//                }
+//            case 0: // If the player is on the top row
+//                if (bottom && left && right) {
+//                    Player.Alive = false; // The player is surrounded and dies
+//                    break;
+//                }
+//        }
+//
+//        // Special handling for the leftmost and rightmost columns of the grid
+//        switch (x) {
+//            case 0: // If the player is in the leftmost column
+//                if (top && bottom && right) {
+//                    Player.Alive = false; // The player is surrounded and dies
+//                    break;
+//                }
+//            case 10: // If the player is in the rightmost column
+//                if (top && bottom && left) {
+//                    Player.Alive = false; // The player is surrounded and dies
+//                    break;
+//                }
+//        }
+//        // If all surrounding cells are blocked, the player is considered dead
+//        if (top && bottom && left && right) {
+//            Player.Alive = false; // The player is surrounded and dies
+//        }
+//    }
 }
 

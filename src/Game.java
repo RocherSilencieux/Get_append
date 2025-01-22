@@ -1,39 +1,29 @@
 import java.util.Scanner;
-public class Game
-{
-    /**
-    spawn in the players in the grid depending on their number
 
-    @param nb number of players
-    @param grid the grid used by the current game
-    @return void
-     */
-    public static void setPlayers(byte nb, String[][] grid)
+public class Game {
+    public static void setPlayers(int nb, String[][] grid)
     {
         switch(nb)
         {
-            case 1:
-                grid[4][5] = "J";
-                break;
             case 2:
-                grid[4][5] = "J1";
-                grid[4][6] = "J2";
+                grid[5][6] = "🟥";
+                grid[5][4] = "🟨";
+                break;
+            case 3:
+                grid[4][5] = "🟩";
+                grid[5][6] = "🟥";
+                grid[5][4] = "🟨";
+                break;
+            case 4:
+                grid[4][6] = "🟧";
+                grid[4][4] = "🟩";
+                grid[5][6] = "🟥";
+                grid[5][4] = "🟨";
                 break;
         }
 
     }
 
-    /**
-     * Destroys a specific cell in the given grid.
-     * <p>
-     * This method prompts the user to input coordinates in the format "row,column".
-     * If the input is valid and the selected cell is empty, the cell is marked as destroyed ("❌").
-     * Otherwise, appropriate error messages are displayed, and the method is called recursively to retry.
-     * </p>
-     *
-     * @param grid a 2D array representing the game grid, where cells can be modified.
-     * @throws NumberFormatException if the user provides non-numeric coordinates.
-     */
     public static void destroyer(String[][] grid) {
         // Create a Scanner object to read user input
         Scanner scanner = new Scanner(System.in);
