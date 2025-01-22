@@ -34,7 +34,11 @@ public class menu {
                     System.out.println("Option ⚙️");
                     tape = false;
                     break;
-                case 4:
+                case 4 :
+                    System.out.println("Score 🏆");
+                    tape = false;
+                    break;
+                case 5:
                     System.out.println("❌ Quitter");
                     break;
                 default: // if no specific cases are found  //
@@ -42,7 +46,7 @@ public class menu {
                     System.out.println("❌ Invalid choice, try again please.");
             }
 
-        } while (choice != 4);
+        } while (choice != 5);
 
         scanner.close();
         System.out.println("✅ programme completed.");
@@ -55,7 +59,8 @@ public class menu {
         System.out.println("║ 1️⃣      Play          ║");
         System.out.println("║ 2️⃣      Rules         ║");
         System.out.println("║ 3️⃣   Party loader     ║");
-        System.out.println("║ 4️⃣      Quit          ║");
+        System.out.println("║ 4️⃣      Score         ║");
+        System.out.println("║ 5️⃣      Quit          ║");
         System.out.println("╚═══════════════════════╝");
     }
 }
