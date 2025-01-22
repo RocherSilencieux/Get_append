@@ -1,5 +1,4 @@
 package grid;
-
 import java.util.Scanner;
 
 public class Game {
@@ -18,6 +17,42 @@ public class Game {
                 break;
         }
     }
+
+    //    FUNCTION destroyer(grid):
+//    PRINT "Veuillez sélectionner une case à détruire (format: ligne,colonne):"
+//    INPUT user_input
+//
+//    TRY:
+//    // Étape 1 : Valider le format
+//    parts ← SPLIT user_input BY ","
+//    IF LENGTH(parts) ≠ 2:
+//    PRINT "Entrée invalide. Veuillez entrer au format ligne,colonne."
+//    RETURN
+//
+//    // Étape 2 : Convertir les coordonnées
+//    y ← CONVERT parts[0] TO INTEGER
+//    x ← CONVERT parts[1] TO INTEGER
+//
+//    // Étape 3 : Vérifier les limites
+//    IF y < 0 OR y ≥ LENGTH(grid) OR x < 0 OR x ≥ LENGTH(grid[0]):
+//    PRINT "Les coordonnées sont hors de la grille."
+//    RETURN
+//
+//    // Étape 4 : Vérifier l'état de la case
+//    IF grid[y][x] ≠ "⚪":
+//    PRINT "Cette case n'est pas une case vide."
+//    RETURN
+//
+//    // Étape 5 : Modifier la case
+//    grid[y][x] ← "❌"
+//    PRINT "La case (" + y + "," + x + ") a été détruite."
+//
+//    CATCH ERROR AS NumberFormatException:
+//    PRINT "Erreur : veuillez entrer des nombres pour les coordonnées."
+//
+//    FINALLY:
+//    CLOSE scanner IF OPEN
+
 
     /**
      * Destroys a specific cell in the given grid.
@@ -134,7 +169,6 @@ public class Game {
                     break;
                 }
         }
-
         // If all surrounding cells are blocked, the player is considered dead
         if (top && bottom && left && right) {
             Player.Alive = false; // The player is surrounded and dies
