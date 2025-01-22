@@ -1,10 +1,13 @@
 public class Game
 {
-    public static void main(String[] args)
-    {
+    /**
+    spawn in the players in the grid depending on their number
 
-    }
-    public static void setPlayers(int nb, String[][] grid)
+    @param nb number of players
+    @param grid the grid used by the current game
+    @return void
+     */
+    public static void setPlayers(byte nb, String[][] grid)
     {
         switch(nb)
         {
