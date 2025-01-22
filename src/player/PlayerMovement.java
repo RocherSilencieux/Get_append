@@ -50,7 +50,7 @@ public class PlayerMovement {
      * @param x      The current horizontal position of the player.
      * @return The new coordinates of the player after the move.
      */
-    public static short[] down(String[][] grid, short[][] player, short y, short x) {
+    public static short[] down(String[][] grid, short[][] player, short y, short x){
         if (y == 9) {
             System.out.println("You cannot move outside the grid ❌");
         } else {

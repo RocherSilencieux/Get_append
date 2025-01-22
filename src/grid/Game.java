@@ -79,4 +79,29 @@ public class Game {
         // Close the scanner to release resources
         scanner.close();
     }
+    /**
+     * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
+     * <p>
+     * This method examines the cells immediately surrounding the player's current position
+     * (up, down, left, and right) in the grid. If all surrounding cells contain either obstacles ("❌")
+     * or enemies ("🧞"), the player's alive status is set to false.
+     * </p>
+     *
+     * @param grid   The array representing the game grid (visual representation).
+     * @param player The array tracking the player's position within the grid.
+     * @param y      The current vertical position of the player.
+     * @param x      The current horizontal position of the player.
+     */
+    public static void death(String[][] grid, short[][] player, short y, short x) {
+        // Check if all surrounding cells contain obstacles or enemies
+        if (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞") &&
+                grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞") &&
+                grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞") &&
+                grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞")) {
+            Player.Alive = false; // Mark the player as no longer alive
+        }
+    }
+
+
+
 }

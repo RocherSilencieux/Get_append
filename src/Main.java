@@ -11,6 +11,7 @@ public class Main {
         Grid.printGrid(grid);
         PlayerMovement.move(grid,currentPlayer);
         Game.destroyer(grid);
+        Game.death(grid, currentPlayer);
 
     }
 }
