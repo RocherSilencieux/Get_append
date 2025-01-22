@@ -5,7 +5,7 @@ public class Scores {
     // Sort by insertion in ascending order
     public static void ascendingSort(List<String[]> players) {
         // Browse the list starting from the second element
-        for (int i = 1; i < players.size(); i++) {
+        for (short i = 1; i < players.size(); i++) {
             // Retrieves the current element
             String[] current = players.get(i);
             int j = i - 1;
@@ -25,7 +25,7 @@ public class Scores {
     // Sort by insertion in descending order
     public static void descendingSort(List<String[]> players) {
         // Browse the list starting from the second element
-        for (int i = 1; i < players.size(); i++) {
+        for (short i = 1; i < players.size(); i++) {
             // Retrieves the current element
             String[] current = players.get(i);
             int j = i - 1;
@@ -47,7 +47,7 @@ public class Scores {
         // Display a title for the list of top players
         System.out.println("\nTop 10 Players:");
         // Display the players by limiting the display to 10 players or less if it's smaller
-        for (int i = 0; i < Math.min(10, players.size()); i++) {
+        for (short i = 0; i < Math.min(10, players.size()); i++) {
             // Displays the ranking, the player name and the score
             System.out.println((i + 1) + ". " + players.get(i)[0] + " - " + players.get(i)[1]);
         }
