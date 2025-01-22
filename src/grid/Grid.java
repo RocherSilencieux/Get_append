@@ -1,6 +1,8 @@
 package grid;
 
 public class Grid {
+    public String[][] grid;
+
     public static void main(String[] args)
     {
 
