@@ -74,6 +74,7 @@ public class menu {
                     break;
                 case 4 :
                     System.out.println("Score 🏆");
+                    System.out.print("Order Descending : 1 Order Ascending : 2 ➡ ");
                     tape = false;
                     // Read the variable tape by the user
                     int sort = scanner.nextInt();
