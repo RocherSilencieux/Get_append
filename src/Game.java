@@ -84,6 +84,7 @@ public class Game {
             if (coordinates.length != 2) {
                 System.out.println("Invalid input. Please enter in the format row,column.");
                 destroyer(grid); // Recursively prompt the user again
+                return;
             }
 
             // Convert the string coordinates to integers
