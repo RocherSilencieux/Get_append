@@ -27,10 +27,6 @@ public class Main {
         players_.add(new String[]{"Jack", "155"});
         players_.add(new String[]{"Kevin", "80"});
         players_.add(new String[]{"Eve", "115"});
-
-
-        test = (Player) Serialization.deserialize("infoUser.ser");
-        System.out.println(test.name);
         if (Menu.tape) {
             Menu.createMenu();
         }
@@ -60,10 +56,9 @@ public class Main {
                     sc.nextLine();
                     String name = sc.nextLine();
                     players[i] = new Player(name);
-                    Serialization.serialize("infoUser.ser",players[i]);
                     System.out.println("saved");
-
                 }
+                Serialization.serialize("infoUser.ser",players);
                 Game.setPlayers(choice,grid.grid);
                 break;
             case 2:
