@@ -114,6 +114,10 @@ public class Game {
         scanner.close();
     }
 
+    public static void doublecase(String[][] grid) {
+        System.out.println("You can destroy two cases");
+        destroyer(grid);
+    }
     /**
      * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
      * <p>
