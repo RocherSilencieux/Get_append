@@ -9,6 +9,14 @@ import java.util.List;
 
 public class Scores {
 
+    /**
+     * Each player is represented by an array of strings, where :
+     * - The first cell contains the player's name.
+     * - The second box contains the player's score.
+     *
+     * @return a list of string arrays representing players and their scores.
+     */
+
     public static List<String[]> getScores() {
         // Création d'une liste de joueurs avec leur nom et score
         List<String[]> players_ = new ArrayList<>();
@@ -25,6 +33,8 @@ public class Scores {
         players_.add(new String[]{"Jack", "155"});
         players_.add(new String[]{"Kevin", "80"});
         players_.add(new String[]{"Eve", "115"});
+
+        // Returns the list of players and their scores
         return players_;
     }
 
