@@ -1,10 +1,8 @@
-import grid.Grid;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static byte choice;
@@ -52,16 +50,8 @@ public class Main {
                 while(choice != 2 && choice != 4 && choice != 3)
                 {
                     //choose a number of player that supports wrong answers
-                    try
-                    {
                         System.out.println("Enter player count from 2 to 4: ");
                         choice = sc.nextByte();
-
-                    }
-                    catch (Exception e)
-                    {
-                    }
-                    System.out.println("Wrong answer");
                 }
                 //choose the name of each player
                 for (byte i = 0; i < choice; i++)
@@ -107,6 +97,7 @@ public class Main {
                 System.out.print("Order Descending : 1 Order Ascending : 2 ➡ ");
                 Menu.tape = false;
                 // Read the variable tape by the user
+                sc.nextLine();
                 int sort = sc.nextInt();
                 switch (sort) {
                     case 1:

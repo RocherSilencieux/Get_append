@@ -59,8 +59,6 @@ public class Menu {
             }
 
         } while (tape);
-
-        scanner.close();
         System.out.println("✅ Program completed.");
     }
 }

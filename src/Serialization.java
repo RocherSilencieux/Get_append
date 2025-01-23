@@ -36,6 +36,7 @@ public class Serialization
     public static Object deserialize(String path)
     {
         Object object;
+        Object[] test;
         try
         {
             FileInputStream fileIn = new FileInputStream(path);

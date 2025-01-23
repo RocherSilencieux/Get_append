@@ -1,11 +1,8 @@
-package grid;
-
 public class Grid {
     public String[][] grid;
 
-    public static void main(String[] args)
-    {
-
+    public Grid(){
+        grid = initializeGrid();
     }
     public static String[][] initializeGrid()
     {
@@ -29,8 +26,5 @@ public class Grid {
                 System.out.print(grid[i][j] + "|");
             }
         }
-    }
-    public void newGame()
-    {
     }
 }
