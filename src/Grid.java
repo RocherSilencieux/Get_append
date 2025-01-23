@@ -1,5 +1,5 @@
 public class Grid {
-    public String[][] grid;
+    public static String[][] grid;
 
     public Grid(){
         grid = initializeGrid();

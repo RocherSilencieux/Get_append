@@ -1,9 +1,9 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game {
-    public static void main(String[] args) {
 
-    }
+    public static Random randomNumbers = new Random();
 
     public static void setPlayers(int nb, String[][] grid) {
         switch (nb) {
@@ -114,24 +114,59 @@ public class Game {
         scanner.close();
     }
 
-    public static void doublecase(String[][] grid) {
-        System.out.println("You can destroy two cases");
-        destroyer(grid);
+    // Generate a random number //
+    public static int genererInt(int borneInf, int borneSup) {
+        Random random = new Random();
+        int nb;
+        nb = borneInf + random.nextInt(borneSup - borneInf);
+        return nb;
     }
-    /**
-     * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
-     * <p>
-     * This method determines if the player is surrounded on all sides (up, down, left, right)
-     * by obstacles ("❌") or enemies ("🧞"). If the player is surrounded, their alive status is set to false.
-     * The edges of the grid are handled safely to avoid out-of-bounds exceptions.
-     * </p>
-     *
-     * @param grid   The array representing the game grid (visual representation).
-     *               Each cell in the grid may contain "❌" (obstacle), "🧞" (enemy), or other values.
-     * @param player The array tracking the player's position within the grid.
-     * @param y      The current vertical position (row) of the player in the grid.
-     * @param x      The current horizontal position (column) of the player in the grid.
-     */
+
+    public static int bonusCasePosDoubleHit_X = genererInt(0,9); // variable x for the TP case
+    public static int bonusCasePosDoubleHit_Y = genererInt(0,10); // variable y for the TP case
+
+    // Bonus : the player can destroy two cases //
+    public static void doublecase(String[][] grid) {
+        if (Player.x == bonusCasePosDoubleHit_X && Player.y == bonusCasePosDoubleHit_Y) {
+            System.out.println("You can destroy two cases");
+            destroyer(grid);
+        }
+    }
+
+
+    public static int bonusCasePosTP_X = genererInt(0,9); // variable x for the TP case
+    public static int bonusCasePosTP_Y = genererInt(0,10); // variable x for the TP case
+
+    // Bonus : the player is teleported if he is in this bonus bloc
+    public static void teleportation(String[][] grid, Player player) {
+        if (Player.x == bonusCasePosTP_X && Player.y == bonusCasePosTP_Y) {
+            while (!grid[y][x].equals(Grid.emptyCase)) {
+                Player.x = genererInt(0, 9);
+                Player.y = genererInt(0, 10);
+                return;
+            }
+
+
+   /* public static void teleportation(String[][], Player player) {
+        if (// the position of player is equal of position of bonus case//) {
+        while(// the new position is not a white case){
+        // the position is equal to a random coordinate //
+        return;
+   */
+            /**
+             * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
+             * <p>
+             * This method determines if the player is surrounded on all sides (up, down, left, right)
+             * by obstacles ("❌") or enemies ("🧞"). If the player is surrounded, their alive status is set to false.
+             * The edges of the grid are handled safely to avoid out-of-bounds exceptions.
+             * </p>
+             *
+             * @param grid   The array representing the game grid (visual representation).
+             *               Each cell in the grid may contain "❌" (obstacle), "🧞" (enemy), or other values.
+             * @param player The array tracking the player's position within the grid.
+             * @param y      The current vertical position (row) of the player in the grid.
+             * @param x      The current horizontal position (column) of the player in the grid.
+             */
 //    public static void death(String[][] grid, short[][] player, short y, short x) {
 //        // Check the top cell, if it exists, to determine if it is blocked
 //        boolean top = (y > 0) && (grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞"));
@@ -177,5 +212,7 @@ public class Game {
 //            Player.Alive = false; // The player is surrounded and dies
 //        }
 //    }
+        }
+    }
 }
 
