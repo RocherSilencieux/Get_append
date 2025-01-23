@@ -5,14 +5,18 @@ public class Game {
 
     }
 
-    public static void setPlayers(int nb, String[][] grid) {
+    public static void setPlayers(int nb, String[][] grid, Player[] players) {
         switch (nb) {
             case 1:
                 grid[4][5] = "J";
                 break;
             case 2:
                 grid[4][5] = "🧑‍🏭";
+                players[0].x = 5;
+                players[0].y = 4;
                 grid[4][6] = "🧞";
+                players[1].x = 6;
+                players[1].y = 4;
                 break;
         }
     }
@@ -80,7 +84,6 @@ public class Game {
             if (coordinates.length != 2) {
                 System.out.println("Invalid input. Please enter in the format row,column.");
                 destroyer(grid); // Recursively prompt the user again
-                return; // Exit the current method call
             }
 
             // Convert the string coordinates to integers
@@ -90,28 +93,25 @@ public class Game {
             // Check if the provided coordinates are within the grid's bounds
             if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
                 System.out.println("Coordinates are out of bounds.");
-                destroyer(grid); // Recursively prompt the user again
-                return; // Exit the current method call
+                destroyer(grid);
+                return;// Recursively prompt the user again
             }
 
             // Check if the selected cell is already occupied or not empty
-            if (!grid[y][x].equals("⚪")) {
+            if (!grid[y][x].equals(Grid.emptyCase)) {
                 System.out.println("This cell is not empty.");
                 destroyer(grid); // Recursively prompt the user again
-                return; // Exit the current method call
             }
 
             // Mark the selected cell as destroyed
-            grid[y][x] = "emptyCase";
+            grid[y][x] = Grid.destroyCase;
             System.out.println("Cell (" + y + "," + x + ") has been destroyed."); // Notify the user
+            return;
 
         } catch (NumberFormatException e) {
             // Handle the case where the user inputs non-numeric values
             System.out.println("Error: Please enter numbers for the coordinates.");
         }
-
-        // Close the scanner to release resources
-        scanner.close();
     }
 
     public static void doublecase(String[][] grid) {
@@ -119,12 +119,13 @@ public class Game {
         destroyer(grid);
     }
 
+
+
     /**
-     * Checks whether the player is surrounded by obstacles or enemies and updates
-     * their alive status.
+     * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
      *
      * @param grid   The array representing the game grid (visual representation).
-     *               Each cell in the grid may contain "destroyCase" (obstacle),
+     *               Each cell in the grid may contain Grid.destroyCase (obstacle),
      *               "🧞" (enemy), or other values.
      * @param player The Player object representing the player's state and position.
      */
@@ -132,34 +133,83 @@ public class Game {
         int x = player.x; // Position horizontale du joueur
         int y = player.y; // Position verticale du joueur
 
-        // Vérifie si la cellule en haut est bloquée
-        boolean top = (y > 0) && !(grid[y - 1][x].equals(Grid.emptyCase));
+        // Vérifie si chaque direction immédiate est bloquée
+        boolean top = isBlocked(grid, y - 1, x);
+        boolean bottom = isBlocked(grid, y + 1, x);
+        boolean left = isBlocked(grid, y, x - 1);
+        boolean right = isBlocked(grid, y, x + 1);
 
-        // Vérifie si la cellule en bas est bloquée
-        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals(Grid.emptyCase));
+        // Vérifie les coins uniquement si le joueur est dans un angle
+        boolean topLeft = (y > 0 && x > 0) && isBlocked(grid, y - 1, x - 1);
+        boolean topRight = (y > 0 && x < grid[0].length - 1) && isBlocked(grid, y - 1, x + 1);
+        boolean bottomLeft = (y < grid.length - 1 && x > 0) && isBlocked(grid, y + 1, x - 1);
+        boolean bottomRight = (y < grid.length - 1 && x < grid[0].length - 1) && isBlocked(grid, y + 1, x + 1);
 
-        // Vérifie si la cellule à gauche est bloquée
-        boolean left = (x > 0) && (grid[y][x - 1].equals(Grid.emptyCase));
-
-        // Vérifie si la cellule à droite est bloquée
-        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals(Grid.emptyCase));
-
-        // Gère les cas spéciaux pour la première et la dernière ligne
-        if ((y == 0 && bottom && left && right) || (y == grid.length - 1 && top && left && right)) {
-            player.alive = false;
-            return;
+        // Si le joueur est dans un coin, vérifie les cases autour uniquement dans les limites applicables
+        if (y == 0 && x == 0) { // Coin haut-gauche
+            if (bottom && right && bottomRight) {
+                player.isalive = false;
+                return;
+            }
+        } else if (y == 0 && x == grid[0].length - 1) { // Coin haut-droit
+            if (bottom && left && bottomLeft) {
+                player.isalive = false;
+                return;
+            }
+        } else if (y == grid.length - 1 && x == 0) { // Coin bas-gauche
+            if (top && right && topRight) {
+                player.isalive = false;
+                return;
+            }
+        } else if (y == grid.length - 1 && x == grid[0].length - 1) { // Coin bas-droit
+            if (top && left && topLeft) {
+                player.isalive = false;
+                return;
+            }
+        } else if (y == 0) { // Bord supérieur (non-angle)
+            if (bottom && left && right) {
+                player.isalive = false;
+                return;
+            }
+        } else if (y == grid.length - 1) { // Bord inférieur (non-angle)
+            if (top && left && right) {
+                player.isalive = false;
+                return;
+            }
+        } else if (x == 0) { // Bord gauche (non-angle)
+            if (top && bottom && right) {
+                player.isalive = false;
+                return;
+            }
+        } else if (x == grid[0].length - 1) { // Bord droit (non-angle)
+            if (top && bottom && left) {
+                player.isalive = false;
+                return;
+            }
+        } else { // Cas général (au centre)
+            if (top && bottom && left && right) {
+                player.isalive = false;
+                return;
+            }
         }
 
-        // Gère les cas spéciaux pour la première et la dernière colonne
-        if ((x == 0 && top && bottom && right) || (x == grid[0].length - 1 && top && bottom && left)) {
-            player.alive = false;
-            return;
-        }
+        // Si aucune condition de mort n'est remplie, le joueur reste en vie
+        player.isalive = true;
+    }
 
-        // Si toutes les cellules autour sont bloquées, le joueur meurt
-        if (top && bottom && left && right) {
-            player.alive = false;
+    /**
+     * Vérifie si une case spécifique est bloquée.
+     *
+     * @param grid Le tableau représentant la grille de jeu.
+     * @param y    La position verticale de la case.
+     * @param x    La position horizontale de la case.
+     * @return True si la case est bloquée (obstacle ou ennemi), false sinon.
+     */
+    private static boolean isBlocked(String[][] grid, int y, int x) {
+        if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
+            return true; // Considéré comme bloqué si hors limites
         }
+        return !grid[y][x].equals(Grid.emptyCase);
     }
 }
 

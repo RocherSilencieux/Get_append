@@ -13,7 +13,7 @@ public class Grid {
         {
             for(int j = 0; j < matrix[i].length; j++)
             {
-                matrix[i][j] = "emptyCase";
+                matrix[i][j] = emptyCase;
             }
         }
         return matrix;

@@ -1,7 +1,7 @@
 import java.io.*;
 public class Serialization
 {
-    public static void serialize(String path, Object object)
+    public static void serialize(String path, Object[] object)
     {
         try {
             System.out.println("test");

@@ -2,104 +2,140 @@ import java.util.Scanner;
 
 public class PlayerMovement {
 
+    public static Scanner scanner = new Scanner(System.in);
+
     /**
-     * Moves the player upwards in the grid.
+     * Vérifie si une case est vide.
      *
-     * @param grid   The array representing the game grid (visual representation).
-     * @param player The Player object containing the player's current position.
+     * @param grid Le tableau représentant la grille de jeu.
+     * @param y    La position verticale de la case.
+     * @param x    La position horizontale de la case.
+     * @return True si la case est vide, false sinon.
      */
-    public static void up(String[][] grid, Player player) {
+    private static boolean isEmptyCase(String[][] grid, int y, int x) {
+        if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
+            return false; // Hors limites, considéré comme non vide
+        }
+        return grid[y][x].equals(Grid.emptyCase);
+    }
+
+    /**
+     * Déplace le joueur vers le haut.
+     *
+     * @param grid   La grille de jeu.
+     * @param player L'objet Player contenant la position actuelle du joueur.
+     */
+    public static void moveUp(String[][] grid, Player player) {
         if (player.y == 0) {
             System.out.println("You cannot move outside the grid.");
+            move(grid, player);
+        } else if (!isEmptyCase(grid, player.y - 1, player.x)) {
+            System.out.println("The cell above is not empty.");
+            move(grid, player);
         } else {
-            grid[player.y][player.x] = "emptyCase"; // Reset the previous position
-            player.y -= 1; // Move the player upwards
+            String temp = grid[player.y][player.x];
+            grid[player.y][player.x] = Grid.emptyCase;
+            player.y -= 1;
+            grid[player.y][player.x] = temp;
         }
     }
 
     /**
-     * Moves the player downwards in the grid.
+     * Déplace le joueur vers le bas.
      *
-     * @param grid   The array representing the game grid (visual representation).
-     * @param player The Player object containing the player's current position.
+     * @param grid   La grille de jeu.
+     * @param player L'objet Player contenant la position actuelle du joueur.
      */
-    public static void down(String[][] grid, Player player) {
+    public static void moveDown(String[][] grid, Player player) {
         if (player.y == grid.length - 1) {
             System.out.println("You cannot move outside the grid.");
+            move(grid, player);
+        } else if (!isEmptyCase(grid, player.y + 1, player.x)) {
+            System.out.println("The cell below is not empty.");
+            move(grid, player);
         } else {
-            grid[player.y][player.x] = "emptyCase"; // Reset the previous position
-            player.y += 1; // Move the player downwards
+            String temp = grid[player.y][player.x];
+            grid[player.y][player.x] = Grid.emptyCase;
+            player.y += 1;
+            grid[player.y][player.x] = temp;
         }
     }
 
     /**
-     * Moves the player to the left in the grid.
+     * Déplace le joueur vers la gauche.
      *
-     * @param grid   The array representing the game grid (visual representation).
-     * @param player The Player object containing the player's current position.
+     * @param grid   La grille de jeu.
+     * @param player L'objet Player contenant la position actuelle du joueur.
      */
-    public static void left(String[][] grid, Player player) {
+    public static void moveLeft(String[][] grid, Player player) {
         if (player.x == 0) {
             System.out.println("You cannot move outside the grid.");
+            move(grid, player);
+        } else if (!isEmptyCase(grid, player.y, player.x - 1)) {
+            System.out.println("The cell to the left is not empty.");
+            move(grid, player);
         } else {
-            grid[player.y][player.x] = "emptyCase"; // Reset the previous position
-            player.x -= 1; // Move the player to the left
+            String temp = grid[player.y][player.x];
+            grid[player.y][player.x] = Grid.emptyCase;
+            player.x -= 1;
+            grid[player.y][player.x] = temp;
         }
     }
 
     /**
-     * Moves the player to the right in the grid.
+     * Déplace le joueur vers la droite.
      *
-     * @param grid   The array representing the game grid (visual representation).
-     * @param player The Player object containing the player's current position.
+     * @param grid   La grille de jeu.
+     * @param player L'objet Player contenant la position actuelle du joueur.
      */
-    public static void right(String[][] grid, Player player) {
+    public static void moveRight(String[][] grid, Player player) {
         if (player.x == grid[0].length - 1) {
             System.out.println("You cannot move outside the grid.");
+            move(grid, player);
+        } else if (!isEmptyCase(grid, player.y, player.x + 1)) {
+            System.out.println("The cell to the right is not empty.");
+            move(grid, player);
         } else {
-            grid[player.y][player.x] = "emptyCase"; // Reset the previous position
-            player.x += 1; // Move the player to the right
+            String temp = grid[player.y][player.x];
+            grid[player.y][player.x] = Grid.emptyCase;
+            player.x += 1;
+            grid[player.y][player.x] = temp;
         }
     }
 
-    /**
-     * Handles player movement based on user input.
-     *
-     * @param grid   The array representing the game grid (visual representation).
-     * @param player The Player object containing the player's current position.
-     */
     public static void move(String[][] grid, Player player) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Please move using the arrow keys or the Z, Q, S, D keys:");
-
         String direction = scanner.nextLine();
 
-        if (direction.isEmpty()) {
+        // Vérification si la direction est vide
+        if (direction == null || direction.isEmpty()) {
             System.out.println("No input provided, please enter a valid direction.");
-            move(grid, player);
-            return;
+            move(grid, player); // Relance la méthode pour demander une nouvelle saisie
+            return; // Terminer cette itération
         }
 
+        // Analyse du premier caractère de la direction
         switch (direction.charAt(0)) {
             case 'z':
             case 'Z':
-                up(grid, player);
+                moveUp(grid, player);
                 break;
             case 's':
             case 'S':
-                down(grid, player);
+                moveDown(grid, player);
                 break;
             case 'q':
             case 'Q':
-                left(grid, player);
+                moveLeft(grid, player);
                 break;
             case 'd':
             case 'D':
-                right(grid, player);
+                moveRight(grid, player);
                 break;
             default:
                 System.out.println("The selected key is not valid for movement.");
-                move(grid, player);
+                move(grid, player); // Redemande une saisie valide
         }
     }
+
 }

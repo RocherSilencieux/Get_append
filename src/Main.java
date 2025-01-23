@@ -3,14 +3,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Main {
+
     public static Scanner sc = new Scanner(System.in);
     public static byte choice;
     public static Grid grid = new Grid();
     public static Player[] players = new Player[4];
     public static Player test;
-    public static void main(String[] args)
+    public static boolean endCondition = true;
 
+    public static void main(String[] args)
     {
         // Création d'une liste de joueurs avec leur nom et score
         List<String[]> players_ = new ArrayList<>();
@@ -27,6 +30,8 @@ public class Main {
         players_.add(new String[]{"Jack", "155"});
         players_.add(new String[]{"Kevin", "80"});
         players_.add(new String[]{"Eve", "115"});
+
+
         if (Menu.tape) {
             Menu.createMenu();
         }
@@ -59,7 +64,31 @@ public class Main {
                     System.out.println("saved");
                 }
                 Serialization.serialize("infoUser.ser",players);
-                Game.setPlayers(choice,grid.grid);
+                Game.setPlayers(choice,grid.grid,players);
+                Grid.printGrid(grid.grid);
+
+                while(endCondition)
+                {
+                    for(Player p : players)
+                    {
+                        for(Player ps : players){
+                            if(!(ps == null))
+                            {
+                                Game.death(grid.grid, ps);
+                            }
+                        }
+
+                        if(!(p == null)) {
+                            if (p.isalive) {
+
+                                PlayerMovement.move(grid.grid, p);
+                                Grid.printGrid(grid.grid);
+                                Game.destroyer(grid.grid);
+                                Grid.printGrid(grid.grid);
+                            }
+                        }
+                    }
+                }
                 break;
             case 2:
                 System.out.println("Rules 📜");
@@ -122,9 +151,6 @@ public class Main {
                 Menu.tape = false;
                 System.out.println("❌ Invalid choice, try again please.");
         }
-        //create the grid and spawn in the players
         System.out.println();
-        Game.setPlayers(choice,grid.grid);
-        Grid.printGrid(grid.grid);
     }
 }
