@@ -1,5 +1,7 @@
 public class Grid {
     public String[][] grid;
+    public static String emptyCase = "🟦";
+    public static String destroyCase = "❌";
 
     public Grid(){
         grid = initializeGrid();
@@ -11,7 +13,7 @@ public class Grid {
         {
             for(int j = 0; j < matrix[i].length; j++)
             {
-                matrix[i][j] = "🟦";
+                matrix[i][j] = "emptyCase";
             }
         }
         return matrix;

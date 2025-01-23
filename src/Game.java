@@ -102,7 +102,7 @@ public class Game {
             }
 
             // Mark the selected cell as destroyed
-            grid[y][x] = "❌";
+            grid[y][x] = "emptyCase";
             System.out.println("Cell (" + y + "," + x + ") has been destroyed."); // Notify the user
 
         } catch (NumberFormatException e) {
@@ -118,64 +118,48 @@ public class Game {
         System.out.println("You can destroy two cases");
         destroyer(grid);
     }
+
     /**
-     * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
-     * <p>
-     * This method determines if the player is surrounded on all sides (up, down, left, right)
-     * by obstacles ("❌") or enemies ("🧞"). If the player is surrounded, their alive status is set to false.
-     * The edges of the grid are handled safely to avoid out-of-bounds exceptions.
-     * </p>
+     * Checks whether the player is surrounded by obstacles or enemies and updates
+     * their alive status.
      *
      * @param grid   The array representing the game grid (visual representation).
-     *               Each cell in the grid may contain "❌" (obstacle), "🧞" (enemy), or other values.
-     * @param player The array tracking the player's position within the grid.
-     * @param y      The current vertical position (row) of the player in the grid.
-     * @param x      The current horizontal position (column) of the player in the grid.
+     *               Each cell in the grid may contain "destroyCase" (obstacle),
+     *               "🧞" (enemy), or other values.
+     * @param player The Player object representing the player's state and position.
      */
-//    public static void death(String[][] grid, short[][] player, short y, short x) {
-//        // Check the top cell, if it exists, to determine if it is blocked
-//        boolean top = (y > 0) && (grid[y - 1][x].equals("❌") || grid[y - 1][x].equals("🧞"));
-//
-//        // Check the bottom cell, if it exists, to determine if it is blocked
-//        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals("❌") || grid[y + 1][x].equals("🧞"));
-//
-//        // Check the left cell, if it exists, to determine if it is blocked
-//        boolean left = (x > 0) && (grid[y][x - 1].equals("❌") || grid[y][x - 1].equals("🧞"));
-//
-//        // Check the right cell, if it exists, to determine if it is blocked
-//        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals("❌") || grid[y][x + 1].equals("🧞"));
-//
-//        // Special handling for the top and bottom rows of the grid
-//        switch (y) {
-//            case 9: // If the player is on the bottom row
-//                if (top && left && right) {
-//                    Player.Alive = false; // The player is surrounded and dies
-//                    break;
-//                }
-//            case 0: // If the player is on the top row
-//                if (bottom && left && right) {
-//                    Player.Alive = false; // The player is surrounded and dies
-//                    break;
-//                }
-//        }
-//
-//        // Special handling for the leftmost and rightmost columns of the grid
-//        switch (x) {
-//            case 0: // If the player is in the leftmost column
-//                if (top && bottom && right) {
-//                    Player.Alive = false; // The player is surrounded and dies
-//                    break;
-//                }
-//            case 10: // If the player is in the rightmost column
-//                if (top && bottom && left) {
-//                    Player.Alive = false; // The player is surrounded and dies
-//                    break;
-//                }
-//        }
-//        // If all surrounding cells are blocked, the player is considered dead
-//        if (top && bottom && left && right) {
-//            Player.Alive = false; // The player is surrounded and dies
-//        }
-//    }
+    public static void death(String[][] grid, Player player) {
+        int x = player.x; // Position horizontale du joueur
+        int y = player.y; // Position verticale du joueur
+
+        // Vérifie si la cellule en haut est bloquée
+        boolean top = (y > 0) && !(grid[y - 1][x].equals(Grid.emptyCase));
+
+        // Vérifie si la cellule en bas est bloquée
+        boolean bottom = (y < grid.length - 1) && (grid[y + 1][x].equals(Grid.emptyCase));
+
+        // Vérifie si la cellule à gauche est bloquée
+        boolean left = (x > 0) && (grid[y][x - 1].equals(Grid.emptyCase));
+
+        // Vérifie si la cellule à droite est bloquée
+        boolean right = (x < grid[0].length - 1) && (grid[y][x + 1].equals(Grid.emptyCase));
+
+        // Gère les cas spéciaux pour la première et la dernière ligne
+        if ((y == 0 && bottom && left && right) || (y == grid.length - 1 && top && left && right)) {
+            player.alive = false;
+            return;
+        }
+
+        // Gère les cas spéciaux pour la première et la dernière colonne
+        if ((x == 0 && top && bottom && right) || (x == grid[0].length - 1 && top && bottom && left)) {
+            player.alive = false;
+            return;
+        }
+
+        // Si toutes les cellules autour sont bloquées, le joueur meurt
+        if (top && bottom && left && right) {
+            player.alive = false;
+        }
+    }
 }
 
