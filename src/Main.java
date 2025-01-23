@@ -2,9 +2,8 @@ import grid.Grid;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static byte choice;
@@ -14,21 +13,9 @@ public class Main {
     public static void main(String[] args)
 
     {
-        // Création d'une liste de joueurs avec leur nom et score
-        List<String[]> players_ = new ArrayList<>();
-        // Add players and their scores to the list
-        players_.add(new String[]{"Alice", "120"});
-        players_.add(new String[]{"Bob", "150"});
-        players_.add(new String[]{"Charlie", "90"});
-        players_.add(new String[]{"Diana", "110"});
-        players_.add(new String[]{"Eden", "145"});
-        players_.add(new String[]{"Frank", "140"});
-        players_.add(new String[]{"Grace", "95"});
-        players_.add(new String[]{"Hank", "130"});
-        players_.add(new String[]{"Ivy", "165"});
-        players_.add(new String[]{"Jack", "155"});
-        players_.add(new String[]{"Kevin", "80"});
-        players_.add(new String[]{"Eve", "115"});
+
+        // Importation de la liste des joueurs depuis PlayerData
+        List<String[]> players_ = Scores.getScores();
 
 
         test = (Player) Serialization.deserialize("infoUser.ser");
