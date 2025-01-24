@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Main class for managing the game flow, including menu navigation, player setup, and game execution.
