@@ -74,7 +74,4 @@ public class Menu {
         } while (tape);
         System.out.println("✅ Program completed.");
     }
-
-
-
 }

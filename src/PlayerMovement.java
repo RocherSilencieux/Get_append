@@ -150,11 +150,13 @@ public class PlayerMovement {
      */
     public static void move(String[][] grid, Player player) {
         System.out.println("Please move using the arrow keys or the Z, Q, S, D keys:");
+        //  MUSIQUE A METTRE ICI !!!!!!!!!!
         String direction = scanner.nextLine();
 
         // Check if the direction is empty
         if (direction == null || direction.isEmpty()) {
             System.out.println("No input provided, please enter a valid direction.");
+            //  MUSIQUE A METTRE ICI !!!!!!!!!!
             Security.antiSpam();
             move(grid, player); // Recurse to ask for a new input
             return; // End the current iteration
@@ -166,25 +168,30 @@ public class PlayerMovement {
             case 'Z':
                 Security.antiSpam();
                 moveUp(grid, player);
+                //  MUSIQUE A METTRE ICI !!!!!!!!!!
                 break;
             case 's':
             case 'S':
                 Security.antiSpam();
                 moveDown(grid, player);
+                //  MUSIQUE A METTRE ICI !!!!!!!!!!
                 break;
             case 'q':
             case 'Q':
                 Security.antiSpam();
                 moveLeft(grid, player);
+                //  MUSIQUE A METTRE ICI !!!!!!!!!!
                 break;
             case 'd':
             case 'D':
                 Security.antiSpam();
                 moveRight(grid, player);
+                //  MUSIQUE A METTRE ICI !!!!!!!!!!
                 break;
             default:
                 System.out.println("The selected key is not valid for movement.");
                 Security.antiSpam();
+                //  MUSIQUE A METTRE ICI !!!!!!!!!!
                 move(grid, player); // Prompt the user again for valid input
         }
     }

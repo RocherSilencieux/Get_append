@@ -157,11 +157,11 @@ public class Game {
         switch (aliveCount) {
             case 1:
                 System.out.println("The winner is " + winner.name + "!");
-                Menu.printVictoryMenu();
+                Banner.printEndGame();
                 break;
             case 0:
                 System.out.println("Equality, Looser!");
-                Menu.printVictoryMenu();
+                Banner.printEndGame();
                 break;
             default:
                 // Il reste plus d'un joueur vivant, donc pas de victoire encore
