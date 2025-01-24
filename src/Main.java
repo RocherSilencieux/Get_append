@@ -10,7 +10,7 @@ public class Main {
     public static byte choice;
     public static Grid grid = new Grid();
     public static Player[] players = new Player[4];
-    public static Player test;
+    public static Player[] allPlayers;
     public static boolean endCondition = true;
 
     public static void main(String[] args)
