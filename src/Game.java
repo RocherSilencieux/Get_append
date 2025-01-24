@@ -158,13 +158,15 @@ public class Game {
             case 1:
                 System.out.println("The winner is " + winner.name + "!");
                 Banner.printEndGame();
+                System.exit(0); // Closes program with output status 0 (successful)
                 break;
             case 0:
                 System.out.println("Equality, Looser!");
                 Banner.printEndGame();
+                System.exit(0); // Closes program with output status 0 (successful)
                 break;
             default:
-                // Il reste plus d'un joueur vivant, donc pas de victoire encore
+                // More than one player left alive, so no victory yet
                 break;
         }
     }
