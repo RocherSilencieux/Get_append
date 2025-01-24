@@ -54,6 +54,7 @@ public class Menu {
             if (tape) {
                 printMenu();
                 System.out.print("➡ Enter your choice: ");
+                Music.main("src\\music\\retro_8bit_happy_adventure(wav).wav");
             }
 
             /**
@@ -72,6 +73,7 @@ public class Menu {
             }
 
         } while (tape);
+
         System.out.println("✅ Program completed.");
     }
 }
