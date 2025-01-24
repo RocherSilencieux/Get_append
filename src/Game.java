@@ -141,7 +141,7 @@ public class Game {
         return !grid[y][x].equals(Grid.emptyCase);
     }
 
-    public static void checkVictory(String[][] grid, Player player) {
+    public static boolean checkVictory(String[][] grid, Player player) {
         // Compte les joueurs vivants
         int aliveCount = 0;
         Player winner = null;
@@ -158,7 +158,7 @@ public class Game {
             case 1:
                 System.out.println("The winner is " + winner.name + "!");
                 Banner.printEndGame();
-                break;
+                return false;
             case 0:
                 System.out.println("Equality, Looser!");
                 Banner.printEndGame();
@@ -167,6 +167,7 @@ public class Game {
                 // Il reste plus d'un joueur vivant, donc pas de victoire encore
                 break;
         }
+        return true;
     }
 
 }

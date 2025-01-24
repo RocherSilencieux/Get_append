@@ -87,8 +87,10 @@ public class Main {
                             if(!(ps == null))
                             {
                                 Game.death(grid.grid, ps);
+                                endCondition = Game.checkVictory(grid.grid, ps);
                             }
                         }
+
 
                         if(!(p == null)) {
                             if (p.isalive) {
