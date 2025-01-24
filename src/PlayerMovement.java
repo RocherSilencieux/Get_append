@@ -1,36 +1,53 @@
 import java.util.Scanner;
 
+/**
+ * The PlayerMovement class handles the movement of the player on the game grid.
+ * It provides methods to move the player in different directions and checks if the destination is valid.
+ */
 public class PlayerMovement {
 
+    /**
+     * Scanner object to capture user input for movement direction.
+     */
     public static Scanner scanner = new Scanner(System.in);
 
     /**
-     * Vérifie si une case est vide.
+     * Checks if a specific cell in the grid is empty.
+     * <p>
+     * This method verifies if the given coordinates are within the grid's bounds
+     * and checks whether the specified cell contains an empty case.
+     * </p>
      *
-     * @param grid Le tableau représentant la grille de jeu.
-     * @param y    La position verticale de la case.
-     * @param x    La position horizontale de la case.
-     * @return True si la case est vide, false sinon.
+     * @param grid The game grid represented as a 2D array of strings.
+     * @param y    The vertical position of the cell.
+     * @param x    The horizontal position of the cell.
+     * @return True if the cell is empty, false otherwise.
      */
     private static boolean isEmptyCase(String[][] grid, int y, int x) {
         if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
-            return false; // Hors limites, considéré comme non vide
+            return false; // Out of bounds, considered not empty
         }
         return grid[y][x].equals(Grid.emptyCase);
     }
 
     /**
-     * Déplace le joueur vers le haut.
+     * Moves the player upwards if the cell above is empty and within bounds.
+     * <p>
+     * If the cell above is not empty or if the player is already at the top row,
+     * a message will be displayed indicating the movement is not possible.
+     * </p>
      *
-     * @param grid   La grille de jeu.
-     * @param player L'objet Player contenant la position actuelle du joueur.
+     * @param grid   The game grid.
+     * @param player The player object containing the current position of the player.
      */
     public static void moveUp(String[][] grid, Player player) {
         if (player.y == 0) {
             System.out.println("You cannot move outside the grid.");
+            Security.antiSpam();
             move(grid, player);
         } else if (!isEmptyCase(grid, player.y - 1, player.x)) {
             System.out.println("The cell above is not empty.");
+            Security.antiSpam();
             move(grid, player);
         } else {
             String temp = grid[player.y][player.x];
@@ -41,17 +58,23 @@ public class PlayerMovement {
     }
 
     /**
-     * Déplace le joueur vers le bas.
+     * Moves the player downwards if the cell below is empty and within bounds.
+     * <p>
+     * If the cell below is not empty or if the player is already at the bottom row,
+     * a message will be displayed indicating the movement is not possible.
+     * </p>
      *
-     * @param grid   La grille de jeu.
-     * @param player L'objet Player contenant la position actuelle du joueur.
+     * @param grid   The game grid.
+     * @param player The player object containing the current position of the player.
      */
     public static void moveDown(String[][] grid, Player player) {
         if (player.y == grid.length - 1) {
             System.out.println("You cannot move outside the grid.");
+            Security.antiSpam();
             move(grid, player);
         } else if (!isEmptyCase(grid, player.y + 1, player.x)) {
             System.out.println("The cell below is not empty.");
+            Security.antiSpam();
             move(grid, player);
         } else {
             String temp = grid[player.y][player.x];
@@ -62,17 +85,23 @@ public class PlayerMovement {
     }
 
     /**
-     * Déplace le joueur vers la gauche.
+     * Moves the player to the left if the cell to the left is empty and within bounds.
+     * <p>
+     * If the cell to the left is not empty or if the player is already at the leftmost column,
+     * a message will be displayed indicating the movement is not possible.
+     * </p>
      *
-     * @param grid   La grille de jeu.
-     * @param player L'objet Player contenant la position actuelle du joueur.
+     * @param grid   The game grid.
+     * @param player The player object containing the current position of the player.
      */
     public static void moveLeft(String[][] grid, Player player) {
         if (player.x == 0) {
             System.out.println("You cannot move outside the grid.");
+            Security.antiSpam();
             move(grid, player);
         } else if (!isEmptyCase(grid, player.y, player.x - 1)) {
             System.out.println("The cell to the left is not empty.");
+            Security.antiSpam();
             move(grid, player);
         } else {
             String temp = grid[player.y][player.x];
@@ -83,17 +112,23 @@ public class PlayerMovement {
     }
 
     /**
-     * Déplace le joueur vers la droite.
+     * Moves the player to the right if the cell to the right is empty and within bounds.
+     * <p>
+     * If the cell to the right is not empty or if the player is already at the rightmost column,
+     * a message will be displayed indicating the movement is not possible.
+     * </p>
      *
-     * @param grid   La grille de jeu.
-     * @param player L'objet Player contenant la position actuelle du joueur.
+     * @param grid   The game grid.
+     * @param player The player object containing the current position of the player.
      */
     public static void moveRight(String[][] grid, Player player) {
         if (player.x == grid[0].length - 1) {
             System.out.println("You cannot move outside the grid.");
+            Security.antiSpam();
             move(grid, player);
         } else if (!isEmptyCase(grid, player.y, player.x + 1)) {
             System.out.println("The cell to the right is not empty.");
+            Security.antiSpam();
             move(grid, player);
         } else {
             String temp = grid[player.y][player.x];
@@ -103,39 +138,54 @@ public class PlayerMovement {
         }
     }
 
+    /**
+     * Prompts the user to enter a movement direction and updates the player's position accordingly.
+     * <p>
+     * The method accepts input in the form of arrow keys or the letters Z, Q, S, D for movement.
+     * If the input is invalid, the method will ask the user for a valid direction again.
+     * </p>
+     *
+     * @param grid   The game grid.
+     * @param player The player object containing the current position of the player.
+     */
     public static void move(String[][] grid, Player player) {
         System.out.println("Please move using the arrow keys or the Z, Q, S, D keys:");
         String direction = scanner.nextLine();
 
-        // Vérification si la direction est vide
+        // Check if the direction is empty
         if (direction == null || direction.isEmpty()) {
             System.out.println("No input provided, please enter a valid direction.");
-            move(grid, player); // Relance la méthode pour demander une nouvelle saisie
-            return; // Terminer cette itération
+            Security.antiSpam();
+            move(grid, player); // Recurse to ask for a new input
+            return; // End the current iteration
         }
 
-        // Analyse du premier caractère de la direction
+        // Analyze the first character of the direction input
         switch (direction.charAt(0)) {
             case 'z':
             case 'Z':
+                Security.antiSpam();
                 moveUp(grid, player);
                 break;
             case 's':
             case 'S':
+                Security.antiSpam();
                 moveDown(grid, player);
                 break;
             case 'q':
             case 'Q':
+                Security.antiSpam();
                 moveLeft(grid, player);
                 break;
             case 'd':
             case 'D':
+                Security.antiSpam();
                 moveRight(grid, player);
                 break;
             default:
                 System.out.println("The selected key is not valid for movement.");
-                move(grid, player); // Redemande une saisie valide
+                Security.antiSpam();
+                move(grid, player); // Prompt the user again for valid input
         }
     }
-
 }

@@ -1,216 +1,172 @@
 import java.util.Scanner;
 
+/**
+ * The Game class contains methods to manage a grid-based game, including setting players,
+ * managing game actions, and checking player status.
+ */
 public class Game {
-    public static void main(String[] args) {
 
+    /**
+     * The main method serves as the entry point for the game.
+     *
+     * @param args Command-line arguments (not used in this implementation).
+     */
+    public static void main(String[] args) {
+        // Game entry point
     }
 
+    /**
+     * Places players on the game grid based on the number of players.
+     *
+     * @param nb      The number of players.
+     * @param grid    The 2D array representing the game grid.
+     * @param players An array of Player objects representing the players.
+     */
     public static void setPlayers(int nb, String[][] grid, Player[] players) {
         switch (nb) {
             case 1:
-                grid[4][5] = "J";
+                grid[4][5] = "J"; // Places the first player in a predefined position
                 break;
             case 2:
-                grid[4][5] = "🧑‍🏭";
+                grid[4][5] = "🧑‍🏭"; // Places the first player
                 players[0].x = 5;
                 players[0].y = 4;
-                grid[4][6] = "🧞";
+
+                grid[4][6] = "🧞"; // Places the second player
                 players[1].x = 6;
                 players[1].y = 4;
                 break;
         }
     }
 
-    //    FUNCTION destroyer(grid):
-//    PRINT "Veuillez sélectionner une case à détruire (format: ligne,colonne):"
-//    INPUT user_input
-//
-//    TRY:
-//    // Étape 1 : Valider le format
-//    parts ← SPLIT user_input BY ","
-//    IF LENGTH(parts) ≠ 2:
-//    PRINT "Entrée invalide. Veuillez entrer au format ligne,colonne."
-//    RETURN
-//
-//    // Étape 2 : Convertir les coordonnées
-//    y ← CONVERT parts[0] TO INTEGER
-//    x ← CONVERT parts[1] TO INTEGER
-//
-//    // Étape 3 : Vérifier les limites
-//    IF y < 0 OR y ≥ LENGTH(grid) OR x < 0 OR x ≥ LENGTH(grid[0]):
-//    PRINT "Les coordonnées sont hors de la grille."
-//    RETURN
-//
-//    // Étape 4 : Vérifier l'état de la case
-//    IF grid[y][x] ≠ "⚪":
-//    PRINT "Cette case n'est pas une case vide."
-//    RETURN
-//
-//    // Étape 5 : Modifier la case
-//    grid[y][x] ← "❌"
-//    PRINT "La case (" + y + "," + x + ") a été détruite."
-//
-//    CATCH ERROR AS NumberFormatException:
-//    PRINT "Erreur : veuillez entrer des nombres pour les coordonnées."
-//
-//    FINALLY:
-//    CLOSE scanner IF OPEN
-
-
     /**
-     * Destroys a specific cell in the given grid.
+     * Prompts the user to select a cell to destroy and updates the game grid.
      * <p>
-     * This method prompts the user to input coordinates in the format "row,column".
-     * If the input is valid and the selected cell is empty, the cell is marked as destroyed ("❌").
-     * Otherwise, appropriate error messages are displayed, and the method is called recursively to retry.
+     * If the input is valid and the cell is empty, it is marked as destroyed ("❌").
+     * The method handles errors such as invalid input or out-of-bounds coordinates.
      * </p>
      *
-     * @param grid a 2D array representing the game grid, where cells can be modified.
-     * @throws NumberFormatException if the user provides non-numeric coordinates.
+     * @param grid The 2D array representing the game grid.
      */
     public static void destroyer(String[][] grid) {
-        // Create a Scanner object to read user input
         Scanner scanner = new Scanner(System.in);
-
-        // Prompt the user to select a cell to destroy
         System.out.println("Please select a cell to destroy (format: row,column):");
-        String targetCell = scanner.nextLine(); // Read the user's input
+        String targetCell = scanner.nextLine();
 
         try {
-            // Split the input string to extract row and column coordinates
             String[] coordinates = targetCell.split(",");
-
-            // Validate that the input contains exactly two parts
             if (coordinates.length != 2) {
                 System.out.println("Invalid input. Please enter in the format row,column.");
-                destroyer(grid); // Recursively prompt the user again
+                Security.antiSpam();
+                destroyer(grid);
                 return;
             }
 
-            // Convert the string coordinates to integers
-            int y = Integer.parseInt(coordinates[0].trim()); // Extract and parse the row index
-            int x = Integer.parseInt(coordinates[1].trim()); // Extract and parse the column index
+            int y = Integer.parseInt(coordinates[0].trim());
+            int x = Integer.parseInt(coordinates[1].trim());
 
-            // Check if the provided coordinates are within the grid's bounds
             if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
                 System.out.println("Coordinates are out of bounds.");
+                Security.antiSpam();
                 destroyer(grid);
-                return;// Recursively prompt the user again
+                return;
             }
 
-            // Check if the selected cell is already occupied or not empty
             if (!grid[y][x].equals(Grid.emptyCase)) {
                 System.out.println("This cell is not empty.");
-                destroyer(grid); // Recursively prompt the user again
+                Security.antiSpam();
+                destroyer(grid);
+                return;
             }
 
-            // Mark the selected cell as destroyed
             grid[y][x] = Grid.destroyCase;
-            System.out.println("Cell (" + y + "," + x + ") has been destroyed."); // Notify the user
-            return;
-
+            System.out.println("Cell (" + y + "," + x + ") has been destroyed.");
         } catch (NumberFormatException e) {
-            // Handle the case where the user inputs non-numeric values
             System.out.println("Error: Please enter numbers for the coordinates.");
+            Security.antiSpam();
+            destroyer(grid);
+            return;
         }
     }
 
+    /**
+     * Allows the user to destroy two cells on the game grid.
+     *
+     * @param grid The 2D array representing the game grid.
+     */
     public static void doublecase(String[][] grid) {
-        System.out.println("You can destroy two cases");
+        System.out.println("You can destroy two cells.");
+        destroyer(grid);
         destroyer(grid);
     }
-
-
 
     /**
      * Checks whether the player is surrounded by obstacles or enemies and updates their alive status.
      *
-     * @param grid   The array representing the game grid (visual representation).
-     *               Each cell in the grid may contain Grid.destroyCase (obstacle),
-     *               "🧞" (enemy), or other values.
+     * @param grid   The 2D array representing the game grid.
      * @param player The Player object representing the player's state and position.
      */
     public static void death(String[][] grid, Player player) {
-        int x = player.x; // Position horizontale du joueur
-        int y = player.y; // Position verticale du joueur
+        int x = player.x;
+        int y = player.y;
 
-        // Vérifie si chaque direction immédiate est bloquée
         boolean top = isBlocked(grid, y - 1, x);
         boolean bottom = isBlocked(grid, y + 1, x);
         boolean left = isBlocked(grid, y, x - 1);
         boolean right = isBlocked(grid, y, x + 1);
 
-        // Vérifie les coins uniquement si le joueur est dans un angle
-        boolean topLeft = (y > 0 && x > 0) && isBlocked(grid, y - 1, x - 1);
-        boolean topRight = (y > 0 && x < grid[0].length - 1) && isBlocked(grid, y - 1, x + 1);
-        boolean bottomLeft = (y < grid.length - 1 && x > 0) && isBlocked(grid, y + 1, x - 1);
-        boolean bottomRight = (y < grid.length - 1 && x < grid[0].length - 1) && isBlocked(grid, y + 1, x + 1);
-
-        // Si le joueur est dans un coin, vérifie les cases autour uniquement dans les limites applicables
-        if (y == 0 && x == 0) { // Coin haut-gauche
-            if (bottom && right && bottomRight) {
-                player.isalive = false;
-                return;
-            }
-        } else if (y == 0 && x == grid[0].length - 1) { // Coin haut-droit
-            if (bottom && left && bottomLeft) {
-                player.isalive = false;
-                return;
-            }
-        } else if (y == grid.length - 1 && x == 0) { // Coin bas-gauche
-            if (top && right && topRight) {
-                player.isalive = false;
-                return;
-            }
-        } else if (y == grid.length - 1 && x == grid[0].length - 1) { // Coin bas-droit
-            if (top && left && topLeft) {
-                player.isalive = false;
-                return;
-            }
-        } else if (y == 0) { // Bord supérieur (non-angle)
-            if (bottom && left && right) {
-                player.isalive = false;
-                return;
-            }
-        } else if (y == grid.length - 1) { // Bord inférieur (non-angle)
-            if (top && left && right) {
-                player.isalive = false;
-                return;
-            }
-        } else if (x == 0) { // Bord gauche (non-angle)
-            if (top && bottom && right) {
-                player.isalive = false;
-                return;
-            }
-        } else if (x == grid[0].length - 1) { // Bord droit (non-angle)
-            if (top && bottom && left) {
-                player.isalive = false;
-                return;
-            }
-        } else { // Cas général (au centre)
-            if (top && bottom && left && right) {
-                player.isalive = false;
-                return;
-            }
+        // Si le joueur est entouré de blocages, il meurt
+        if (top && bottom && left && right) {
+            player.isalive = false;
+            System.out.println(player.name + " is dead.");
+            checkVictory(grid, player);
+        } else {
+            player.isalive = true;  // Le joueur est encore en vie
         }
-
-        // Si aucune condition de mort n'est remplie, le joueur reste en vie
-        player.isalive = true;
     }
 
+
     /**
-     * Vérifie si une case spécifique est bloquée.
+     * Checks if a specific cell is blocked by an obstacle or enemy.
      *
-     * @param grid Le tableau représentant la grille de jeu.
-     * @param y    La position verticale de la case.
-     * @param x    La position horizontale de la case.
-     * @return True si la case est bloquée (obstacle ou ennemi), false sinon.
+     * @param grid The 2D array representing the game grid.
+     * @param y    The vertical position of the cell.
+     * @param x    The horizontal position of the cell.
+     * @return True if the cell is blocked; false otherwise.
      */
     private static boolean isBlocked(String[][] grid, int y, int x) {
         if (y < 0 || y >= grid.length || x < 0 || x >= grid[0].length) {
-            return true; // Considéré comme bloqué si hors limites
+            return true;
         }
         return !grid[y][x].equals(Grid.emptyCase);
     }
-}
 
+    public static void checkVictory(String[][] grid, Player player) {
+        // Compte les joueurs vivants
+        int aliveCount = 0;
+        Player winner = null;
+
+        for (Player p : Main.players) {
+            if (p.isalive) {
+                aliveCount++;
+                winner = p;  // Si un joueur est vivant, c'est potentiellement le gagnant
+            }
+        }
+
+        // Vérifie le nombre de joueurs vivants
+        switch (aliveCount) {
+            case 1:
+                System.out.println("The winner is " + winner.name + "!");
+                Menu.printVictoryMenu();
+                break;
+            case 0:
+                System.out.println("Equality, Looser!");
+                Menu.printVictoryMenu();
+                break;
+            default:
+                // Il reste plus d'un joueur vivant, donc pas de victoire encore
+                break;
+        }
+    }
+
+}
