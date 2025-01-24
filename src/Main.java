@@ -4,37 +4,49 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class for managing the game flow, including menu navigation, player setup, and game execution.
+ */
 public class Main {
 
+    // Scanner for user input
     public static Scanner sc = new Scanner(System.in);
     public static byte choice;
     public static Grid grid = new Grid();
     public static Player[] players = new Player[4];
     public static Player[] allPlayers;
     public static boolean endCondition = true;
+    /**
+     * Main method that initiates the game and handles menu options.
+     *
+     * @param args Command-line arguments (unused).
+     */
+    public static void main(String[] args) {
 
-    public static void main(String[] args)
-    {
-        // Création d'une liste de joueurs avec leur nom et score
+        Banner.printBanner();
+
+        // List to store players' names and scores
         List<String[]> players_ = new ArrayList<>();
         // Add players and their scores to the list
-        players_.add(new String[]{"Alice", "120"});
-        players_.add(new String[]{"Bob", "150"});
-        players_.add(new String[]{"Charlie", "90"});
-        players_.add(new String[]{"Diana", "110"});
-        players_.add(new String[]{"Eden", "145"});
-        players_.add(new String[]{"Frank", "140"});
-        players_.add(new String[]{"Grace", "95"});
-        players_.add(new String[]{"Hank", "130"});
-        players_.add(new String[]{"Ivy", "165"});
-        players_.add(new String[]{"Jack", "155"});
-        players_.add(new String[]{"Kevin", "80"});
-        players_.add(new String[]{"Eve", "115"});
+        players_.add(new String[] { "Alice", "120" });
+        players_.add(new String[] { "Bob", "150" });
+        players_.add(new String[] { "Charlie", "90" });
+        players_.add(new String[] { "Diana", "110" });
+        players_.add(new String[] { "Eden", "145" });
+        players_.add(new String[] { "Frank", "140" });
+        players_.add(new String[] { "Grace", "95" });
+        players_.add(new String[] { "Hank", "130" });
+        players_.add(new String[] { "Ivy", "165" });
+        players_.add(new String[] { "Jack", "155" });
+        players_.add(new String[] { "Kevin", "80" });
+        players_.add(new String[] { "Eve", "115" });
 
-
+        // Display the menu if tape flag is set
         if (Menu.tape) {
             Menu.createMenu();
         }
+
+        // Handle menu choices
         switch (Menu.choice) {
             case 1:
                 System.out.println("Play 🕹️");
