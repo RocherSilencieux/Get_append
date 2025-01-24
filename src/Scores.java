@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -6,6 +7,35 @@ import java.util.List;
  * and the second element is the player's score (index 1).
  */
 public class Scores {
+
+    /**
+     * Each player is represented by an array of strings, where :
+     * - The first cell contains the player's name.
+     * - The second box contains the player's score.
+     *
+     * @return a list of string arrays representing players and their scores.
+     */
+
+    public static List<String[]> getScores() {
+        // Création d'une liste de joueurs avec leur nom et score
+        List<String[]> players_ = new ArrayList<>();
+        // Add players and their scores to the list
+        players_.add(new String[]{"Alice", "120"});
+        players_.add(new String[]{"Bob", "150"});
+        players_.add(new String[]{"Charlie", "90"});
+        players_.add(new String[]{"Diana", "110"});
+        players_.add(new String[]{"Eden", "145"});
+        players_.add(new String[]{"Frank", "140"});
+        players_.add(new String[]{"Grace", "95"});
+        players_.add(new String[]{"Hank", "130"});
+        players_.add(new String[]{"Ivy", "165"});
+        players_.add(new String[]{"Jack", "155"});
+        players_.add(new String[]{"Kevin", "80"});
+        players_.add(new String[]{"Eve", "115"});
+
+        // Returns the list of players and their scores
+        return players_;
+    }
 
     /**
      * Sorts a list of players by their scores in ascending order using insertion sort.
