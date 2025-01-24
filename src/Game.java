@@ -147,7 +147,7 @@ public class Game {
         Player winner = null;
 
         for (Player p : Main.players) {
-            if (p.isalive) {
+            if ( p != null && p.isalive) {
                 aliveCount++;
                 winner = p;  // Si un joueur est vivant, c'est potentiellement le gagnant
             }
