@@ -41,6 +41,9 @@ public class Main {
         players_.add(new String[] { "Kevin", "80" });
         players_.add(new String[] { "Eve", "115" });
 
+        allPlayers = (Player[]) Serialization.deserialize("infoUser.ser");
+
+
         // Display the menu if tape flag is set
         if (Menu.tape) {
             Menu.createMenu();
@@ -66,14 +69,18 @@ public class Main {
                         System.out.println("Enter player count from 2 to 4: ");
                         choice = sc.nextByte();
                 }
+                sc.nextLine();
                 //choose the name of each player
                 for (byte i = 0; i < choice; i++)
                 {
-                    System.out.println("What is the name of Player "+ i);
-                    sc.nextLine();
-                    String name = sc.nextLine();
-                    players[i] = new Player(name);
-                    System.out.println("saved");
+                    String name = "";
+                    while(name == "")
+                    {
+                        System.out.println("What is the name of Player "+ i);
+                        name = sc.nextLine();
+                        players[i] = new Player(name);
+                        System.out.println("saved");
+                    }
                 }
                 Serialization.serialize("infoUser.ser",players);
                 Game.setPlayers(choice,grid.grid,players);

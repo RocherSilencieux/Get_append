@@ -28,10 +28,7 @@ public class Player implements Serializable {
      */
     public boolean isalive = true;
 
-    /**
-     * The player's skin (visual representation in the game).
-     */
-    public String skin;
+    public int score;
 
     /**
      * Constructs a new Player with the given name.
